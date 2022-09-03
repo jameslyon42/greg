@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  worker:
+    container_name: worker
+    build:
+      context: .
+
+    depends_on:
+      - db
+    volumes:
+      - ./src:/code
+    working_dir: /code
+    stdin_open: true
+    tty: true
+
+  db:
+    container_name: db
+    image: postgres:13.8-bullseye
+    environment:
+      - POSTGRES_PASSWORD=asdfasdf
+      - POSTGRES_DB=greg
+    volumes:
+      - data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+volumes:
+  data:
